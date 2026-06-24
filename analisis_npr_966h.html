@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPR CAT 966H</title>
+  <link rel="stylesheet" href="formato_npr_966h.css">
+</head>
+
+<body>
+
+<header class="cabecera">
+  <img src="recursos/logo_cetemin.png" class="logo">
+
+  <div class="titulo">
+    <h1>ANÁLISIS NPR</h1>
+    <h2>CARGADOR FRONTAL CAT 966H</h2>
+  </div>
+
+  <img src="recursos/logo_personal.png" class="logo">
+</header>
+
+
+
+<section class="contenedor">
+  <h2>REGISTRO DE EVALUACIÓN NPR</h2>
+  <p class="descripcion">Agrega los modos de falla detectados y calcula automáticamente el NPR.</p>
+
+  <button onclick="agregarFilaAdicional()" class="btn">Agregar Evaluación</button>
+  <button onclick="limpiarAdicionales()" class="btn rojo">Limpiar Evaluación</button>
+<button onclick="window.print()" class="btn imprimir">Imprimir / PDF</button>
+  <table id="tablaAdicional">
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th>Modo de Falla</th>
+        <th>S</th>
+        <th>O</th>
+        <th>D</th>
+        <th>NPR</th>
+        <th>Riesgo</th>
+        <th>Acción Correctiva</th>
+        <th>Responsable</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+
+
+<section class="resumen">
+  <h2>Resumen General de Riesgos</h2>
+
+  <div class="tarjetas-resumen">
+
+    <div class="tarjeta-riesgo tarjeta-bajo">
+      <span>Riesgo Bajo</span>
+      <strong id="totalBajo">0</strong>
+    </div>
+
+    <div class="tarjeta-riesgo tarjeta-medio">
+      <span>Riesgo Medio</span>
+      <strong id="totalMedio">0</strong>
+    </div>
+
+    <div class="tarjeta-riesgo tarjeta-alto">
+      <span>Riesgo Alto</span>
+      <strong id="totalAlto">0</strong>
+    </div>
+
+    <div class="tarjeta-riesgo tarjeta-critico">
+      <span>Riesgo Crítico</span>
+      <strong id="totalCritico">0</strong>
+    </div>
+
+  </div>
+</section>
+
+<section class="contenedor">
+  <button
+    id="btnHistorial"
+    onclick="abrirHistorial()"
+    class="btn">
+
+    📂 Ver Historial de Evaluaciones NPR
+
+  </button>
+</section>
+
+<section class="leyenda-npr">
+
+    <h2>Guía de Interpretación del NPR</h2>
+
+    <div class="formula">
+
+        <h3>Fórmula de cálculo</h3>
+
+        <p>
+
+            <strong>NPR = Severidad × Ocurrencia × Detección</strong>
+
+        </p>
+
+        <div class="explicacion">
+
+            <p><strong>Severidad (S):</strong> Consecuencia que tendría la falla sobre el equipo, la operación o la seguridad.</p>
+
+            <p><strong>Ocurrencia (O):</strong> Probabilidad de que la falla ocurra.</p>
+
+            <p><strong>Detección (D):</strong> Capacidad para detectar la falla antes de que genere consecuencias.</p>
+
+        </div>
+
+    </div>
+
+    <h3>Clasificación del Nivel de Riesgo</h3>
+
+    <table class="tabla-leyenda">
+
+        <thead>
+
+            <tr>
+
+                <th>Nivel</th>
+                <th>Rango NPR</th>
+                <th>Acción recomendada</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr class="bajo">
+
+                <td>🟢 Bajo</td>
+                <td>1 - 100</td>
+                <td>Continuar con inspecciones y mantenimiento preventivo.</td>
+
+            </tr>
+
+            <tr class="medio">
+
+                <td>🟡 Medio</td>
+                <td>101 - 200</td>
+                <td>Programar intervención y realizar seguimiento.</td>
+
+            </tr>
+
+            <tr class="alto">
+
+                <td>🟠 Alto</td>
+                <td>201 - 500</td>
+                <td>Priorizar la reparación para evitar una falla mayor.</td>
+
+            </tr>
+
+            <tr class="critico">
+
+                <td>🔴 Crítico</td>
+                <td>501 - 1000</td>
+                <td>Intervenir inmediatamente y evaluar la continuidad de operación.</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div class="ejemplo">
+
+        <h3>Ejemplo de cálculo</h3>
+
+        <p>
+
+            Severidad = <strong>9</strong> |
+            Ocurrencia = <strong>5</strong> |
+            Detección = <strong>4</strong>
+
+        </p>
+
+        <h2>
+
+            NPR = 180
+
+        </h2>
+
+        <p>
+
+            Resultado:
+            <strong style="color:#d4a300;">RIESGO MEDIO</strong>
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<div id="modalHistorial" class="modal-historial">
+
+  <div class="contenido-modal">
+
+    <button class="cerrar-modal" onclick="cerrarHistorial()">×</button>
+
+    <h2>Historial de Evaluaciones NPR del CAT 966H</h2>
+
+    <p class="descripcion">
+      En esta sección se presentan los modos de falla identificados durante el diagnóstico del equipo.
+    </p>
+
+    <div class="tarjetas-resumen historial-resumen">
+
+      <div class="tarjeta-riesgo tarjeta-bajo">
+        <span>Historial Bajo</span>
+        <strong id="histBajo">0</strong>
+      </div>
+
+      <div class="tarjeta-riesgo tarjeta-medio">
+        <span>Historial Medio</span>
+        <strong id="histMedio">0</strong>
+      </div>
+
+      <div class="tarjeta-riesgo tarjeta-alto">
+        <span>Historial Alto</span>
+        <strong id="histAlto">0</strong>
+      </div>
+
+      <div class="tarjeta-riesgo tarjeta-critico">
+        <span>Historial Crítico</span>
+        <strong id="histCritico">0</strong>
+      </div>
+
+    </div>
+
+    <table id="tablaBase">
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Modo de Falla</th>
+          <th>S</th>
+          <th>O</th>
+          <th>D</th>
+          <th>NPR</th>
+          <th>Riesgo</th>
+          <th>Acción Correctiva</th>
+          <th>Responsable</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<script src="calculo_npr_966h.js"></script>
+
+</body>
+</html>
